@@ -175,3 +175,4 @@ The CSV must contain columns: `energyId, departmentId, energyConsumed, date`.
   requesting a prediction (regression requires at least 2 points).
 - All dates are stored as ISO date strings; the frontend uses
   `<input type="date">` for entry.
+  
