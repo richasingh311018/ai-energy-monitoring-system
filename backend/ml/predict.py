@@ -4,7 +4,7 @@ AI Prediction Module - Standalone Python script
 
 Uses Pandas, NumPy, and Scikit-Learn (Linear Regression) to analyze
 historical energy consumption data and predict future consumption
-for a given department.
+for a given departments.
 
 Usage:
     python predict.py --csv energy_data.csv --department D001 --days-ahead 7
