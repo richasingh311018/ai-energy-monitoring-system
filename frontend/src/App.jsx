@@ -1,0 +1,85 @@
+import React, { useState } from 'react';
+import Dashboard from './components/Dashboard';
+import Departments from './components/Departments';
+import EnergyRecords from './components/EnergyRecords';
+import Analysis from './components/Analysis';
+import Prediction from './components/Prediction';
+import Reports from './components/Reports';
+
+const TABS = [
+  { key: 'dashboard', label: 'Dashboard', icon: 'DB' },
+  { key: 'departments', label: 'Departments', icon: 'DP' },
+  { key: 'energy', label: 'Energy records', icon: 'ER' },
+  { key: 'analysis', label: 'Analytics', icon: 'AN' },
+  { key: 'prediction', label: 'AI predictions', icon: 'AI' },
+  { key: 'reports', label: 'Reports', icon: 'RP' }
+];
+
+function App() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard />;
+      case 'departments':
+        return <Departments />;
+      case 'energy':
+        return <EnergyRecords />;
+      case 'analysis':
+        return <Analysis />;
+      case 'prediction':
+        return <Prediction />;
+      case 'reports':
+        return <Reports />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
+  return (
+    <div className="app-container">
+      <aside className="sidebar">
+        <div className="brand">
+          <div className="brand-mark">E</div>
+          <div>
+            <strong>EnergyIQ</strong>
+            <span>Operations platform</span>
+          </div>
+        </div>
+        <p className="nav-label">Workspace</p>
+        <nav className="sidebar-nav" aria-label="Main navigation">
+          {TABS.map((tab) => (
+            <button
+              key={tab.key}
+              className={activeTab === tab.key ? 'active nav-item' : 'nav-item'}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              <span className="nav-icon">{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </nav>
+        <div className="sidebar-footer">
+          <span className="status-dot" />
+          <span>System connected</span>
+        </div>
+      </aside>
+      <div className="main-content">
+        <header className="topbar">
+          <div>
+            <p className="eyebrow">ENERGY MANAGEMENT</p>
+            <h1>{TABS.find((tab) => tab.key === activeTab)?.label}</h1>
+          </div>
+          <div className="topbar-meta">
+            <span className="live-pill"><span className="status-dot" /> Live data</span>
+            <div className="avatar">AS</div>
+          </div>
+        </header>
+        <main>{renderContent()}</main>
+      </div>
+    </div>
+  );
+}
+
+export default App;

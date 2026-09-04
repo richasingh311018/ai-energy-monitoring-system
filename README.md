@@ -102,7 +102,7 @@ npm start
 
 The React app will run at `http://localhost:3000` and communicate with
 the backend at the URL configured in `frontend/.env`
-(`REACT_APP_API_URL=http://localhost:5000/api`).
+(`VITE_API_URL=http://localhost:5000/api`).
 
 ### 4. (Optional) Standalone Python ML Script
 

@@ -1,6 +1,3 @@
-// server.js
-// Entry point for the AI-Based Energy Consumption Monitoring and Analysis System backend
-
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,8 +10,6 @@ const predictionRoutes = require('./routes/predictionRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -26,16 +21,17 @@ app.use('/api/predict', predictionRoutes);
 app.use('/api/reports', reportRoutes);
 
 app.get('/', (req, res) => {
-  res.json({ message: 'AI-Based Energy Consumption Monitoring and Analysis System API is running' });
+  res.json({ message: '⚡ Energy Monitor API running!' });
 });
 
-// MongoDB connection
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/energy_monitoring';
 
-mongoose.connect(MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI || 'mongodb://localhost:27017/energy_monitoring')
   .then(() => {
-    console.log('MongoDB connected successfully');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log('✅ MongoDB connected successfully');
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   })
-  .catch((err) => console.error('MongoDB connection error:', err));
+  .catch((err) => {
+    console.error('❌ MongoDB connection error:', err.message);
+  });
