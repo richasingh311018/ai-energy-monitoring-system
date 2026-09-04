@@ -100,19 +100,35 @@ function App() {
                 title="Open profile menu"
                 aria-expanded={profileOpen}
               >
-              <div className="avatar">AD</div>
+                <div className="avatar">AD</div>
                 <span>{user.username}</span>
                 <span className="profile-chevron">{profileOpen ? '▲' : '▼'}</span>
               </button>
               {profileOpen && (
                 <div className="profile-dropdown">
+                  <p className="profile-title">My profile</p>
                   <div className="profile-summary">
                     <div className="avatar">AD</div>
                     <div>
                       <strong>Administrator</strong>
-                      <span>{user.username}</span>
+                      <span>EnergyIQ user</span>
                     </div>
                   </div>
+                  <div className="profile-divider" />
+                  <dl className="profile-details">
+                    <div>
+                      <dt>Username</dt>
+                      <dd>{user.username}</dd>
+                    </div>
+                    <div>
+                      <dt>Role</dt>
+                      <dd>System administrator</dd>
+                    </div>
+                    <div>
+                      <dt>Access</dt>
+                      <dd>All refinery areas</dd>
+                    </div>
+                  </dl>
                   <div className="profile-divider" />
                   <button className="sign-out-button" onClick={handleLogout}>
                     Sign out

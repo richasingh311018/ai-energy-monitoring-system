@@ -51,10 +51,15 @@ button { cursor: pointer; }
   padding: 13px; border: 1px solid #e0e7ee; border-radius: 10px;
   background: #fff; box-shadow: 0 12px 30px rgba(25, 45, 65, .14);
 }
+.profile-title { margin: 0 0 12px; color: #25384b; font-size: 13px; font-weight: 800; }
 .profile-summary { display: flex; align-items: center; gap: 10px; }
 .profile-summary strong { display: block; color: #25384b; font-size: 13px; }
 .profile-summary span { display: block; margin-top: 3px; color: #8492a2; font-size: 11px; }
 .profile-divider { height: 1px; margin: 12px 0 10px; background: #edf1f5; }
+.profile-details { display: grid; gap: 9px; margin: 0; }
+.profile-details div { display: flex; justify-content: space-between; gap: 12px; }
+.profile-details dt { color: #8492a2; font-size: 10px; }
+.profile-details dd { margin: 0; color: #35495d; font-size: 10px; font-weight: 700; text-align: right; }
 .sign-out-button { width: 100%; color: #b13e49; background: #fff3f4; text-align: left; }
 .sign-out-button:hover { color: #fff; background: #d6535c; }
 
