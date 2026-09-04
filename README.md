@@ -3,7 +3,8 @@
 
 ## Hindalco Alumina Refinery
 
-**EnergyIQ**
+#**EnergyIQ**
+
 An AI-powered full-stack web application designed to monitor, analyze, visualize, and predict energy consumption across major process areas of an Alumina Refinery.
 
 The system helps management identify high-energy-consuming process areas, understand consumption trends, compare departments, detect unusual consumption patterns, and forecast future energy requirements using Machine Learning.
