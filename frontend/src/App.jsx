@@ -22,6 +22,7 @@ function App() {
     return storedUser ? JSON.parse(storedUser) : null;
   });
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [profileOpen, setProfileOpen] = useState(false);
 
   const handleLogin = (loggedInUser) => {
     window.localStorage.setItem('energyiq-user', JSON.stringify(loggedInUser));
@@ -92,10 +93,33 @@ function App() {
           </div>
           <div className="topbar-meta">
             <span className="live-pill"><span className="status-dot" /> Live data</span>
-            <button className="user-menu" onClick={handleLogout} title="Sign out">
+            <div className="profile-menu">
+              <button
+                className="user-menu"
+                onClick={() => setProfileOpen((isOpen) => !isOpen)}
+                title="Open profile menu"
+                aria-expanded={profileOpen}
+              >
               <div className="avatar">AD</div>
-              <span>Sign out</span>
-            </button>
+                <span>{user.username}</span>
+                <span className="profile-chevron">{profileOpen ? '▲' : '▼'}</span>
+              </button>
+              {profileOpen && (
+                <div className="profile-dropdown">
+                  <div className="profile-summary">
+                    <div className="avatar">AD</div>
+                    <div>
+                      <strong>Administrator</strong>
+                      <span>{user.username}</span>
+                    </div>
+                  </div>
+                  <div className="profile-divider" />
+                  <button className="sign-out-button" onClick={handleLogout}>
+                    Sign out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
         <main>{renderContent()}</main>

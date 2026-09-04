@@ -44,6 +44,19 @@ button { cursor: pointer; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: #54d2a5; box-shadow: 0 0 0 3px rgba(84, 210, 165, .14); }
 .user-menu { display: flex; align-items: center; gap: 8px; padding: 0; color: #718198; background: transparent; }
 .user-menu:hover { color: #267d82; background: transparent; }
+.profile-menu { position: relative; }
+.profile-chevron { color: #91a0b1; font-size: 9px; }
+.profile-dropdown {
+  position: absolute; z-index: 10; top: calc(100% + 12px); right: 0; width: 215px;
+  padding: 13px; border: 1px solid #e0e7ee; border-radius: 10px;
+  background: #fff; box-shadow: 0 12px 30px rgba(25, 45, 65, .14);
+}
+.profile-summary { display: flex; align-items: center; gap: 10px; }
+.profile-summary strong { display: block; color: #25384b; font-size: 13px; }
+.profile-summary span { display: block; margin-top: 3px; color: #8492a2; font-size: 11px; }
+.profile-divider { height: 1px; margin: 12px 0 10px; background: #edf1f5; }
+.sign-out-button { width: 100%; color: #b13e49; background: #fff3f4; text-align: left; }
+.sign-out-button:hover { color: #fff; background: #d6535c; }
 
 .main-content { min-width: 0; flex: 1; padding: 0 34px 40px; }
 .topbar { min-height: 106px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e4e9f0; margin-bottom: 30px; }
