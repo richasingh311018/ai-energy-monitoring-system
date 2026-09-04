@@ -75,6 +75,17 @@ cd backend
 npm install
 ```
 
+Seed the six Hindalco alumina refinery process departments and illustrative
+development records. This command clears old department, energy, and
+prediction data first:
+
+```bash
+npm run seed
+```
+
+The seeded energy values are realistic demo values for development only and
+are not actual Hindalco measurements.
+
 Edit `.env` if needed:
 
 ```
@@ -109,7 +120,7 @@ the backend at the URL configured in `frontend/.env`
 ```bash
 cd backend/ml
 pip install -r requirements.txt
-python predict.py --csv energy_data.csv --department D001 --days-ahead 7
+python predict.py --csv energy_data.csv --department BAUXITE_GRINDING --days-ahead 7
 ```
 
 The CSV must contain columns: `energyId, departmentId, energyConsumed, date`.

@@ -75,7 +75,7 @@ exports.predictConsumption = async (req, res) => {
 };
 
 // @desc    Get all stored predictions (optionally by department)
-// @route   GET /api/predict?departmentId=D001
+// @route   GET /api/predict?departmentId=BAUXITE_GRINDING
 exports.getPredictions = async (req, res) => {
   try {
     const { departmentId } = req.query;

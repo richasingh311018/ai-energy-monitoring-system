@@ -2,6 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { getDepartments, addDepartment, updateDepartment, deleteDepartment } from '../api';
 
+const REFINERY_DEPARTMENTS = [
+  ['BAUXITE_GRINDING', 'Bauxite Handling & Grinding'],
+  ['DIGESTION', 'Digestion'],
+  ['CLARIFICATION', 'Clarification'],
+  ['EVAPORATION', 'Evaporation'],
+  ['PRECIPITATION', 'Precipitation'],
+  ['CALCINATION', 'Calcination']
+];
+
 function Departments() {
   const [departments, setDepartments] = useState([]);
   const [form, setForm] = useState({ departmentId: '', departmentName: '', location: '' });
@@ -78,15 +87,18 @@ function Departments() {
       <div className="card">
         <h3>{editingId ? `Edit Department: ${editingId}` : 'Add New Department'}</h3>
         <form className="inline-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
+          <select
             name="departmentId"
-            placeholder="Department ID (e.g., D001)"
             value={form.departmentId}
             onChange={handleChange}
             disabled={!!editingId}
             required
-          />
+          >
+            <option value="">Select refinery process area</option>
+            {REFINERY_DEPARTMENTS.map(([id, name]) => (
+              <option key={id} value={id}>{name}</option>
+            ))}
+          </select>
           <input
             type="text"
             name="departmentName"

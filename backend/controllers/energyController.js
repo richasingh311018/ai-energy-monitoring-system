@@ -1,6 +1,7 @@
 // controllers/energyController.js
 const Energy = require('../models/Energy');
 const Department = require('../models/Department');
+const { REFINERY_DEPARTMENT_IDS } = require('../config/refineryDepartments');
 
 // @desc    Record daily energy consumption
 // @route   POST /api/energy
@@ -10,6 +11,9 @@ exports.addEnergyRecord = async (req, res) => {
 
     if (!energyId || !departmentId || energyConsumed === undefined) {
       return res.status(400).json({ success: false, message: 'energyId, departmentId and energyConsumed are required' });
+    }
+    if (!REFINERY_DEPARTMENT_IDS.has(departmentId)) {
+      return res.status(400).json({ success: false, message: 'Energy records must belong to a refinery process department' });
     }
 
     const department = await Department.findOne({ departmentId });
@@ -36,7 +40,7 @@ exports.addEnergyRecord = async (req, res) => {
 };
 
 // @desc    Get all energy records (optionally filter by departmentId)
-// @route   GET /api/energy?departmentId=D001&from=&to=
+// @route   GET /api/energy?departmentId=BAUXITE_GRINDING&from=&to=
 exports.getEnergyRecords = async (req, res) => {
   try {
     const { departmentId, from, to } = req.query;

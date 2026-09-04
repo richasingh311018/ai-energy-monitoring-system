@@ -31,7 +31,7 @@ const getGroupIdByPeriod = (period) => {
 };
 
 // @desc    Get consumption trend (daily/weekly/monthly) optionally by department
-// @route   GET /api/analysis/trend?period=daily&departmentId=D001
+// @route   GET /api/analysis/trend?period=daily&departmentId=BAUXITE_GRINDING
 exports.getConsumptionTrend = async (req, res) => {
   try {
     const { period = 'daily', departmentId } = req.query;

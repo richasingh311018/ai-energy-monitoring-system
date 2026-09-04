@@ -1,5 +1,9 @@
 // controllers/departmentController.js
 const Department = require('../models/Department');
+const {
+  REFINERY_DEPARTMENTS,
+  REFINERY_DEPARTMENT_IDS
+} = require('../config/refineryDepartments');
 
 // @desc    Add a new department
 // @route   POST /api/departments
@@ -9,6 +13,9 @@ exports.addDepartment = async (req, res) => {
 
     if (!departmentId || !departmentName || !location) {
       return res.status(400).json({ success: false, message: 'departmentId, departmentName and location are required' });
+    }
+    if (!REFINERY_DEPARTMENT_IDS.has(departmentId)) {
+      return res.status(400).json({ success: false, message: 'Only Hindalco refinery process departments are allowed' });
     }
 
     const existing = await Department.findOne({ departmentId });
@@ -27,7 +34,13 @@ exports.addDepartment = async (req, res) => {
 // @route   GET /api/departments
 exports.getDepartments = async (req, res) => {
   try {
-    const departments = await Department.find().sort({ createdAt: -1 });
+    const departments = await Department.find();
+    const departmentOrder = new Map(
+      REFINERY_DEPARTMENTS.map((department, index) => [department.departmentId, index])
+    );
+    departments.sort(
+      (a, b) => departmentOrder.get(a.departmentId) - departmentOrder.get(b.departmentId)
+    );
     res.status(200).json({ success: true, count: departments.length, data: departments });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
