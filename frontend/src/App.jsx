@@ -5,6 +5,7 @@ import EnergyRecords from './components/EnergyRecords';
 import Analysis from './components/Analysis';
 import Prediction from './components/Prediction';
 import Reports from './components/Reports';
+import Login from './components/Login';
 
 const TABS = [
   { key: 'dashboard', label: 'Dashboard', icon: 'DB' },
@@ -16,7 +17,21 @@ const TABS = [
 ];
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const storedUser = window.localStorage.getItem('energyiq-user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  const handleLogin = (loggedInUser) => {
+    window.localStorage.setItem('energyiq-user', JSON.stringify(loggedInUser));
+    setUser(loggedInUser);
+  };
+
+  const handleLogout = () => {
+    window.localStorage.removeItem('energyiq-user');
+    setUser(null);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -36,6 +51,10 @@ function App() {
         return <Dashboard />;
     }
   };
+
+  if (!user) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="app-container">
@@ -73,7 +92,10 @@ function App() {
           </div>
           <div className="topbar-meta">
             <span className="live-pill"><span className="status-dot" /> Live data</span>
-            <div className="avatar">AS</div>
+            <button className="user-menu" onClick={handleLogout} title="Sign out">
+              <div className="avatar">AD</div>
+              <span>Sign out</span>
+            </button>
           </div>
         </header>
         <main>{renderContent()}</main>

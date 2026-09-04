@@ -42,6 +42,8 @@ button { cursor: pointer; }
 .nav-item.active .nav-icon { color: #8ff0cb; }
 .sidebar-footer { margin-top: auto; padding: 16px 12px 2px; color: #8294ad; font-size: 11px; display: flex; align-items: center; gap: 8px; }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: #54d2a5; box-shadow: 0 0 0 3px rgba(84, 210, 165, .14); }
+.user-menu { display: flex; align-items: center; gap: 8px; padding: 0; color: #718198; background: transparent; }
+.user-menu:hover { color: #267d82; background: transparent; }
 
 .main-content { min-width: 0; flex: 1; padding: 0 34px 40px; }
 .topbar { min-height: 106px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e4e9f0; margin-bottom: 30px; }
@@ -74,12 +76,42 @@ th { color: #738399; background: #f8fafc; font-size: 11px; font-weight: 700; let
 .error-message { padding: 11px 13px; color: #a9323c; background: #fff0f1; border: 1px solid #ffd4d8; border-radius: 8px; }
 .success-message { padding: 11px 13px; color: #19714e; background: #ecfbf4; border: 1px solid #c9f0df; border-radius: 8px; }
 
+.login-page { min-height: 100vh; display: grid; grid-template-columns: minmax(360px, 500px) 1fr; background: #f5f7fb; }
+.login-panel { width: min(100%, 410px); align-self: center; justify-self: center; padding: 38px; }
+.login-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 72px; }
+.login-brand strong { display: block; color: #162b3c; font-size: 18px; }
+.login-brand span { display: block; margin-top: 2px; color: #8294a8; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; }
+.login-copy h1 { margin: 9px 0 10px; color: #142b3c; font-size: 34px; letter-spacing: -1px; }
+.login-copy p:not(.eyebrow) { margin: 0 0 30px; color: #718198; font-size: 14px; line-height: 1.6; }
+.login-form { display: grid; gap: 8px; }
+.login-form label { margin-top: 8px; color: #3c4d60; font-size: 12px; font-weight: 700; }
+.login-form input { min-height: 45px; padding: 11px 13px; border: 1px solid #dbe2ea; border-radius: 8px; outline: none; background: #fff; color: #1c2d3d; }
+.login-form input:focus { border-color: #4f9f9a; box-shadow: 0 0 0 3px rgba(79, 159, 154, .12); }
+.login-form button { min-height: 45px; margin-top: 13px; font-weight: 700; }
+.login-error { margin: 7px 0 0; color: #b33c48; font-size: 12px; }
+.demo-credentials { display: grid; gap: 5px; margin-top: 22px; padding: 13px; border: 1px solid #d8eee5; border-radius: 8px; color: #56736e; background: #eefaf5; font-size: 11px; }
+.demo-credentials strong { color: #267d82; font-size: 12px; }
+.login-visual { position: relative; overflow: hidden; display: flex; align-items: center; padding: 12%; color: #fff; background: linear-gradient(135deg, #123c4c 0%, #1e6970 54%, #2c8b85 100%); }
+.login-visual::after { content: ""; position: absolute; right: -150px; bottom: -190px; width: 540px; height: 540px; border: 1px solid rgba(255,255,255,.13); border-radius: 50%; box-shadow: 0 0 0 50px rgba(255,255,255,.035), 0 0 0 100px rgba(255,255,255,.025); }
+.login-visual-content { position: relative; z-index: 1; max-width: 510px; }
+.visual-kicker { color: #8ff0cb; font-size: 11px; font-weight: 800; letter-spacing: 1.8px; }
+.login-visual h2 { margin: 18px 0 14px; font-size: clamp(36px, 4vw, 58px); line-height: 1.04; letter-spacing: -2px; }
+.login-visual p { max-width: 420px; color: #c5e4e2; font-size: 15px; line-height: 1.7; }
+.process-preview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 42px; max-width: 410px; }
+.process-preview span { padding: 11px 13px; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; color: #e2f5f1; background: rgba(255,255,255,.08); font-size: 12px; }
+
 @media (max-width: 900px) {
   .sidebar { width: 208px; }
   .main-content { padding: 0 20px 30px; }
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
+  .login-page { display: block; }
+  .login-panel { width: 100%; padding: 28px 22px; }
+  .login-brand { margin-bottom: 50px; }
+  .login-visual { min-height: 310px; padding: 32px 22px; }
+  .login-visual h2 { font-size: 35px; }
+  .process-preview { margin-top: 22px; }
   .app-container { display: block; }
   .sidebar { width: 100%; min-height: auto; padding: 14px; }
   .brand { padding: 0 4px 14px; }
