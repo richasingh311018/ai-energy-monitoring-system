@@ -1,4 +1,163 @@
-# AI-Based Energy Consumption Monitoring and Analysis System
+
+# ⚡ AI-Based Energy Consumption Monitoring & Analysis System
+
+## Hindalco Alumina Refinery
+
+An AI-powered full-stack web application designed to monitor, analyze, visualize, and predict energy consumption across major process areas of an Alumina Refinery.
+
+The system helps management identify high-energy-consuming process areas, understand consumption trends, compare departments, detect unusual consumption patterns, and forecast future energy requirements using Machine Learning.
+
+---
+
+## 📌 Project Overview
+
+Energy-intensive industrial processes require continuous monitoring of electricity and energy consumption.
+
+Traditional monitoring systems often provide raw consumption data but do not provide:
+
+- Clear department-wise comparison
+- Historical trend analysis
+- Future consumption prediction
+- High-consumption detection
+- Centralized reporting
+- Actionable insights
+
+This project provides a centralized **Energy Intelligence Dashboard** that converts raw energy records into meaningful analytics and predictions.
+
+The system is designed around the major process areas of a Hindalco Alumina Refinery.
+
+---
+
+# 🏭 Main Process Areas
+
+The application currently monitors these **6 major refinery process areas**:
+
+| ID | Process Area |
+|---|---|
+| BAUXITE_GRINDING | Bauxite Handling & Grinding |
+| DIGESTION | Digestion |
+| CLARIFICATION | Clarification |
+| EVAPORATION | Evaporation |
+| PRECIPITATION | Precipitation |
+| CALCINATION | Calcination |
+
+> Note: The development/demo dataset contains simulated values. It does not represent actual confidential Hindalco measurements.
+
+---
+
+# 🎯 Objectives
+
+The main objectives of the system are:
+
+1. Monitor energy consumption continuously.
+2. Store energy records in a centralized database.
+3. Analyze daily, weekly, and monthly consumption.
+4. Compare energy consumption across process areas.
+5. Identify the highest-consuming process area.
+6. Detect unusually high consumption.
+7. Predict future energy consumption using Linear Regression.
+8. Generate department-wise and monthly reports.
+9. Provide a professional management dashboard.
+10. Create a scalable architecture that can later integrate with real industrial data sources.
+
+---
+
+# 🚀 Key Features
+
+## 1. 📊 Real-Time Energy Dashboard
+
+The dashboard provides a centralized view of energy performance.
+
+### KPI Cards
+
+- Total Energy Consumption
+- Average Energy Consumption
+- Highest Consuming Process Area
+- Latest Energy Consumption
+- Predicted Future Consumption
+- Number of Energy Records
+- Number of Monitored Process Areas
+
+All values are fetched from the backend and database.
+
+No hardcoded dashboard statistics are used.
+
+---
+
+# 2. 🏭 Process Area Management
+
+The system provides complete CRUD operations for process areas.
+
+### Operations
+
+- Add Process Area
+- View Process Areas
+- Update Process Area
+- Delete Process Area
+- View individual process area details
+
+Each energy record is associated with a specific process area.
+
+---
+
+# 3. ⚡ Energy Record Management
+
+Users can manage energy consumption records.
+
+### Operations
+
+- Add energy record
+- View energy records
+- Update energy record
+- Delete energy record
+- Filter by process area
+- Filter by date
+- Search records
+
+Each record contains information such as:
+
+- Energy ID
+- Process Area
+- Energy Consumed
+- Date
+
+---
+
+# 4. 📈 Energy Trend Analysis
+
+The system analyzes historical consumption patterns.
+
+### Supported periods
+
+- Daily
+- Weekly
+- Monthly
+
+The frontend uses interactive charts to visualize trends.
+
+This helps management understand:
+
+- Increasing consumption
+- Decreasing consumption
+- Stable consumption
+- Peak consumption periods
+- Process-area performance
+
+---
+
+# 5. 📊 Process Area Comparison
+
+The system compares energy consumption across all six major process areas.
+
+Example:
+
+```text
+Bauxite Handling & Grinding    ███████████████
+Digestion                      ███████████
+Clarification                  ███████
+Evaporation                    █████████████
+Precipitation                  ██████████
+Calcination                    ████████████████
 
 A full-stack MERN application that monitors department-wise energy
 consumption, analyzes trends, and predicts future consumption using a
