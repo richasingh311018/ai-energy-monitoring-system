@@ -15,7 +15,7 @@ The system helps management identify high-energy-consuming process areas, unders
 
 Energy-intensive industrial processes require continuous monitoring of electricity and energy consumption.
 
-Traditional monitoring systems often provide raw consumption data but do not provide:
+Traditional monitoring systems often provide raw consumption data but do not provide:-
 
 - Clear department-wise comparison
 - Historical trend analysis
