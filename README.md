@@ -13,7 +13,7 @@ The system helps management identify high-energy-consuming process areas, unders
 
 ## 📌 Project Overview
 
-Energy-intensive industrial processes require continuous monitoring of electricity and energy consumption.
+Energy-intensive industrial processes require continuous monitoring of electricity and energy consumption
 
 Traditional monitoring systems often provide raw consumption data but do not provide:-
 
