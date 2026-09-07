@@ -86,11 +86,15 @@ npm run seed
 The seeded energy values are realistic demo values for development only and
 are not actual Hindalco measurements.
 
-Edit `.env` if needed:
+Copy `backend/.env.example` to `backend/.env` and set local values:
 
 ```
 PORT=5000
 MONGO_URI=mongodb://localhost:27017/energy_monitoring
+SESSION_SECRET=replace-with-a-long-random-secret
+FRONTEND_ORIGIN=http://localhost:3000
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=replace-with-a-strong-password
 ```
 
 Start the backend:
@@ -110,6 +114,20 @@ cd frontend
 npm install
 npm start
 ```
+
+Copy `frontend/.env.example` to `frontend/.env` when the API is not running at
+the default local URL. Production deployments must provide a real
+`VITE_API_URL` at build time.
+
+The API now requires an authenticated session. The initial administrator is
+created on backend startup from `ADMIN_USERNAME` and `ADMIN_PASSWORD` when the
+user does not already exist. Never commit either `.env` file or use demo
+credentials in production.
+
+The spreadsheet import currently uses `xlsx`. `npm audit` reports known
+security issues with this dependency and no upstream fix is currently
+available. Keep imports authenticated, size-limited, and restricted to
+trusted files; replace this parser before accepting untrusted public uploads.
 
 The React app will run at `http://localhost:3000` and communicate with
 the backend at the URL configured in `frontend/.env`

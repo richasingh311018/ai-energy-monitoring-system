@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-
-const DEMO_USERNAME = 'admin';
-const DEMO_PASSWORD = 'energy123';
+import { login } from '../api';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
 
-    if (username.trim() === DEMO_USERNAME && password === DEMO_PASSWORD) {
-      onLogin({ username: DEMO_USERNAME });
-      return;
+    try {
+      const response = await login({ username, password });
+      onLogin(response.data.data.user);
+    } catch (requestError) {
+      setError(requestError.response?.data?.message || 'Unable to sign in');
     }
-
-    setError('Invalid credentials. Use the demo login shown below.');
   };
 
   return (
@@ -58,10 +56,6 @@ function Login({ onLogin }) {
           {error && <p className="login-error">{error}</p>}
           <button type="submit">Sign in to dashboard</button>
         </form>
-        <div className="demo-credentials">
-          <strong>Demo access</strong>
-          <span>Username: <b>admin</b> &nbsp; Password: <b>energy123</b></span>
-        </div>
       </section>
       <section className="login-visual">
         <div className="login-visual-content">

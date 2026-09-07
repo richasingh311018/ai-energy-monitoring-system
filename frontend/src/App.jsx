@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Departments from './components/Departments';
 import EnergyRecords from './components/EnergyRecords';
@@ -6,6 +6,7 @@ import Analysis from './components/Analysis';
 import Prediction from './components/Prediction';
 import Reports from './components/Reports';
 import Login from './components/Login';
+import { getCurrentUser, logout } from './api';
 
 const TABS = [
   { key: 'dashboard', label: 'Dashboard', icon: 'DB' },
@@ -17,20 +18,24 @@ const TABS = [
 ];
 
 function App() {
-  const [user, setUser] = useState(() => {
-    const storedUser = window.localStorage.getItem('energyiq-user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [user, setUser] = useState(null);
+  const [checkingSession, setCheckingSession] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [profileOpen, setProfileOpen] = useState(false);
 
   const handleLogin = (loggedInUser) => {
-    window.localStorage.setItem('energyiq-user', JSON.stringify(loggedInUser));
     setUser(loggedInUser);
   };
 
-  const handleLogout = () => {
-    window.localStorage.removeItem('energyiq-user');
+  useEffect(() => {
+    getCurrentUser()
+      .then((response) => setUser(response.data.data.user))
+      .catch(() => setUser(null))
+      .finally(() => setCheckingSession(false));
+  }, []);
+
+  const handleLogout = async () => {
+    await logout();
     setUser(null);
   };
 
@@ -52,6 +57,10 @@ function App() {
         return <Dashboard />;
     }
   };
+
+  if (checkingSession) {
+    return <div className="login-page"><p>Checking session...</p></div>;
+  }
 
   if (!user) {
     return <Login onLogin={handleLogin} />;
