@@ -1,5 +1,5 @@
 
-# ⚡ AI-Based Energy Consumption Monitoring & Analysis System
+# ⚡ AI-Based Energy Consumption Monitoring & Analysis System--
 
 ## Hindalco Alumina Refinery
 
