@@ -31,6 +31,7 @@ export const getConsumptionTrend = (params) => api.get('/analysis/trend', { para
 export const getDepartmentComparison = (params) => api.get('/analysis/department-comparison', { params });
 export const getHighestConsumption = (params) => api.get('/analysis/highest-consumption', { params });
 export const getSummary = () => api.get('/analysis/summary');
+export const getOperationalInsights = () => api.get('/analysis/insights');
 
 // AI Prediction Module
 export const predictConsumption = (data) => api.post('/predict', data);

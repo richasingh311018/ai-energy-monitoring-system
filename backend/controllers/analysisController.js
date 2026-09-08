@@ -180,3 +180,170 @@ exports.getSummary = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+const calculatePercentChange = (current, previous) => {
+  if (!Number.isFinite(current) || !Number.isFinite(previous)) {
+    return 0;
+  }
+
+  if (previous === 0) {
+    return current === 0 ? 0 : 100;
+  }
+
+  return ((current - previous) / previous) * 100;
+};
+
+// @desc    Derive plant-wide efficiency insights and operational alerts
+// @route   GET /api/analysis/insights
+exports.getOperationalInsights = async (req, res) => {
+  try {
+    const records = await Energy.find({}).sort({ date: 1 }).lean();
+    const departments = await Department.find({}).lean();
+
+    if (!records.length || !departments.length) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          summaryCards: [],
+          alerts: [],
+          opportunities: [],
+          departmentScorecard: [],
+          monthlyDelta: 0,
+          headline: 'Add department and energy records to unlock AI insights.'
+        }
+      });
+    }
+
+    const deptMap = {};
+    departments.forEach((department) => {
+      deptMap[department.departmentId] = department;
+    });
+
+    const departmentStats = {};
+    records.forEach((record) => {
+      const key = record.departmentId;
+      if (!departmentStats[key]) {
+        departmentStats[key] = {
+          departmentId: key,
+          departmentName: deptMap[key]?.departmentName || key,
+          location: deptMap[key]?.location || 'Unknown',
+          totalConsumption: 0,
+          recordCount: 0,
+          avgConsumption: 0,
+          latestConsumption: 0,
+          previousConsumption: 0
+        };
+      }
+
+      departmentStats[key].totalConsumption += Number(record.energyConsumed || 0);
+      departmentStats[key].recordCount += 1;
+    });
+
+    const monthTotals = {};
+    records.forEach((record) => {
+      const date = new Date(record.date);
+      const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      monthTotals[key] = (monthTotals[key] || 0) + Number(record.energyConsumed || 0);
+    });
+
+    const monthlyKeys = Object.keys(monthTotals).sort();
+    const latestMonthKey = monthlyKeys[monthlyKeys.length - 1];
+    const previousMonthKey = monthlyKeys[monthlyKeys.length - 2] || latestMonthKey;
+    const latestMonthConsumption = monthTotals[latestMonthKey] || 0;
+    const previousMonthConsumption = monthTotals[previousMonthKey] || 0;
+    const monthlyDelta = calculatePercentChange(latestMonthConsumption, previousMonthConsumption);
+
+    const allAverages = Object.values(departmentStats).map((department) => ({
+      departmentId: department.departmentId,
+      departmentName: department.departmentName,
+      location: department.location,
+      avgConsumption: department.totalConsumption / department.recordCount,
+      totalConsumption: department.totalConsumption
+    }));
+
+    const globalAvg = allAverages.reduce((sum, dept) => sum + dept.avgConsumption, 0) / allAverages.length;
+
+    const departmentScorecard = allAverages
+      .map((department) => ({
+        departmentId: department.departmentId,
+        departmentName: department.departmentName,
+        location: department.location,
+        totalConsumption: department.totalConsumption,
+        avgConsumption: department.avgConsumption,
+        efficiencyScore: Math.max(0, Math.min(100, 100 - ((department.avgConsumption - globalAvg) / Math.max(globalAvg, 1)) * 100))
+      }))
+      .sort((a, b) => b.efficiencyScore - a.efficiencyScore);
+
+    const peakDepartment = departmentScorecard.reduce((leader, current) => {
+      if (!leader || current.totalConsumption > leader.totalConsumption) {
+        return current;
+      }
+      return leader;
+    }, null);
+
+    const bestEfficiencyDepartment = departmentScorecard[0];
+
+    const alerts = departmentScorecard
+      .filter((department) => department.efficiencyScore < 75)
+      .slice(0, 3)
+      .map((department) => ({
+        id: department.departmentId,
+        title: `${department.departmentName} is above the plant average`,
+        message: `Average draw is ${department.avgConsumption.toFixed(0)} kWh, which is below the expected efficiency threshold for this plant.`,
+        severity: department.efficiencyScore < 60 ? 'high' : 'medium'
+      }));
+
+    const opportunities = departmentScorecard
+      .filter((department) => department.efficiencyScore >= 75)
+      .slice(0, 3)
+      .map((department) => ({
+        id: department.departmentId,
+        title: `${department.departmentName} is operating efficiently`,
+        message: `Sustain this performance to reduce peak load risk and protect the plant’s operating margin.`,
+        severity: 'low'
+      }));
+
+    const summaryCards = [
+      {
+        label: 'Plant load',
+        value: `${latestMonthConsumption.toLocaleString(undefined, { maximumFractionDigits: 0 })} kWh`,
+        detail: `${monthlyDelta >= 0 ? 'Up' : 'Down'} ${Math.abs(monthlyDelta).toFixed(1)}% vs previous month`
+      },
+      {
+        label: 'Top consumer',
+        value: peakDepartment ? peakDepartment.departmentName : 'N/A',
+        detail: peakDepartment ? `${peakDepartment.totalConsumption.toFixed(0)} kWh total` : 'No department data'
+      },
+      {
+        label: 'Best efficiency',
+        value: bestEfficiencyDepartment ? `${bestEfficiencyDepartment.efficiencyScore}%` : 'N/A',
+        detail: bestEfficiencyDepartment ? bestEfficiencyDepartment.departmentName : 'No score available'
+      },
+      {
+        label: 'Operational alerts',
+        value: String(alerts.length),
+        detail: alerts.length ? 'Departments need attention' : 'All departments within target range'
+      }
+    ];
+
+    const headline = monthlyDelta > 5
+      ? 'Consumption is trending above target and needs action.'
+      : monthlyDelta < -5
+        ? 'Energy usage is improving and the site is operating efficiently.'
+        : 'Operations remain stable with manageable demand variation.';
+
+    res.status(200).json({
+      success: true,
+      data: {
+        summaryCards,
+        alerts,
+        opportunities,
+        departmentScorecard,
+        monthlyDelta,
+        headline
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

@@ -4,6 +4,12 @@ A full-stack MERN application that monitors department-wise energy
 consumption, analyzes trends, and predicts future consumption using a
 Linear Regression model.
 
+## Unique Features Added
+
+- AI-powered operational intelligence cards on the dashboard that highlight efficiency hotspots, peak-load departments, and month-over-month consumption changes.
+- Department efficiency scorecards with visual performance bars for quick plant-wide comparisons.
+- Smart alerting that flags underperforming departments and surfaces the best-performing areas for benchmarking.
+
 ## Project Structure
 
 ```

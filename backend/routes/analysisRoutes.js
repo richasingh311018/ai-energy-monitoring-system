@@ -5,12 +5,15 @@ const {
   getConsumptionTrend,
   getDepartmentComparison,
   getHighestConsumption,
-  getSummary
+  getSummary,
+  getOperationalInsights
 } = require('../controllers/analysisController');
 
 router.get('/trend', getConsumptionTrend);
 router.get('/department-comparison', getDepartmentComparison);
 router.get('/highest-consumption', getHighestConsumption);
 router.get('/summary', getSummary);
+router.get('/insights', getOperationalInsights);
+router.get('/intelligence', getOperationalInsights);
 
 module.exports = router;
